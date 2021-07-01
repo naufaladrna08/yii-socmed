@@ -66,7 +66,7 @@ class AppUser extends ActiveRecord implements IdentityInterface {
   }
 
   public function getAuthKey() {
-    return $this->auth_key;
+    return $this->authKey;
   }
 
   public function validateAuthKey($authKey) {
@@ -79,5 +79,13 @@ class AppUser extends ActiveRecord implements IdentityInterface {
 
   public function validatePassword($password) {
     return $this->password === $password;
+  }
+
+  public function setPassword($password) {
+    $this->password = Yii::$app->security->generateRandomString();
+  }
+
+  public function generateAuthKey() {
+    $this->authKey = Yii::$app->security->generateRandomString();
   }
 }
