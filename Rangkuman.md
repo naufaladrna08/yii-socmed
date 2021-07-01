@@ -106,3 +106,78 @@ base_url/index.php?r=site/say&message=World
 
 Penjelasan URL-nya. Parameter R adalah route, sebuah unik id untuk yang 
 mengacu pada action. Format rutenya adalah ControllerID/Action.
+
+##### Bekerja dengan Form
+
+Untuk membuat login request dan form validasi, dibutuhkan sebuah model.
+Cara membuat model adalah buat file baru di dalam folder models. Cara
+penamaanya adalah kapital di setiap awal kata. Contoh: EntryForm.php.
+Di dalam EntryForm kita harus buat class dengan nama yang sama dengan
+nama filenya karena file tersebut akan diautoload oleh Yii. Kelas 
+tersebut harus dijadikan turunan dari class Model.
+
+```php
+namespace app\Models;
+
+use Yii;
+use yii\base\Model;
+
+class EntryForm extends Model {
+  public $name;
+  public $email;
+
+  public function rules() {
+    return [
+      [['name', 'email'], 'required'],
+      ['email', 'email']
+    ];
+  }
+}
+```
+
+Di dalam kelas EntryPoint, terdapat fungsi rules yang juga akan dipanggil
+oleh Yii sebagai validasi data. Perhatikan saat return, rule pertama agar
+name dan email diperlukan saat validasi. rule kedua agar property email
+wajib berformat email.
+
+Setelah kelas dibuat, kita akan memanggilnya di controller. Kita akan 
+gunakan controller yang telah kita buat disediakan, SiteController.
+
+Agar model dapat dipakai,
+```php
+use \app\models\EntryForm;
+```
+
+Tambahkan action untuk memasukan data
+
+```php
+public function actionEntry() {
+  $model = new EntryForm();
+  
+  if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+    /* Data valid */
+
+    return $this->render('entry-confirm', ['model' => $model]);
+  } else {
+    /* Invalid or form */
+
+    return $this->render('entry', ['model' => $model]);
+  }
+} 
+```
+
+Penjelasan
+1. $model->load Digunakan untuk mengisi model dengan data. Jadi saat
+melakukan $model->load(Yii::$app->request->post())), kita mengisi model
+dengan data dari $_POST. Tanpa ini, akan seperti ini:
+
+```php
+if (isset($_POST)) {
+  $model->attributes = $_POST;
+}
+```
+
+2. $app adalah representasi dari objek aplikasi. Bisa untuk mengambil 
+$_POST, request, response, dll.
+3. $model->validate akan memvalidasi data berdasarkan rules yang telah
+diberikan.
