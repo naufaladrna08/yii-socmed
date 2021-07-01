@@ -223,3 +223,15 @@ Untuk mengambil semua data dari table country,
 ```php
 $query->orderBy('name')->all();
 ```
+
+##### Menyimpan data ke database
+
+Buat modelnya terlebih dahulu. Dalam contoh, kita akan mengubah table
+user dengan User model. Kita buat model menggunakan GII atau mau buat
+sendiri juga gpp asal mengextend ActiveRecord.
+
+```php
+$user = new User();
+$user->username = 'halo12343'; // Pastikan ada kolom username pada db.
+$user->save();
+```
