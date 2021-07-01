@@ -78,11 +78,11 @@ class AppUser extends ActiveRecord implements IdentityInterface {
   }
 
   public function validatePassword($password) {
-    return $this->password === $password;
+    return $this->password === Yii::$app->security->generatePasswordHash($password);;
   }
 
   public function setPassword($password) {
-    $this->password = Yii::$app->security->generateRandomString();
+    $this->password = Yii::$app->security->generatePasswordHash($password);
   }
 
   public function generateAuthKey() {
