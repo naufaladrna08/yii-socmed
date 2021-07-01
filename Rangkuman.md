@@ -67,3 +67,42 @@ basic/                  path aplikasi dasar
 9. Aksi meyiapkan view, menyediakannya dengan model data.
 10. Hasilnya diberikan dikembalikan ke komponen aplikasi [respon](https://www.yiiframework.com/doc/guide/2.0/id/runtime-responses).
 11. Komponen respon mengirimkan hasil yang diberikan ke browser pengguna.
+
+##### Hello World
+
+Untuk membuat tampilan `Hello World`, kita butuhkan Controller, Action
+dan View. Buat fungsi (action) baru dalam Controller Site (Site Controller).
+
+```php
+public function actionSay($message = "Hello") {
+    return $this->render('say', ['message' => $message]);
+}
+```
+
+Kode di atas untuk membuat action Say. Action dalam yii dibuat dengan 
+prefix action kemudian diikuti dengan nama Actionnya. Nama actionnya
+kudu camel case contoh actionSayHello. Di dalam actionSay ada fungsi
+render yang dipanggil untuk memanggil view say dalam folder 
+view/ControllerID/viewName. Variabel message juga diteruskan ke view.
+
+
+```php
+<?php
+use yii\helpers\Html;
+?>
+
+<?= Html::encode($message); ?>
+```
+
+Kode di atas adalah view Say. Kita gunakan namespace Html untuk mengambil
+fungsi encode untuk mengencode $message karena jika tidak, ini akan rentan
+tergadap Cross Site Scripting (XSS). 
+
+Untuk test, pada address bar. Ketik
+
+```
+base_url/index.php?r=site/say&message=World
+```
+
+Penjelasan URL-nya. Parameter R adalah route, sebuah unik id untuk yang 
+mengacu pada action. Format rutenya adalah ControllerID/Action.
