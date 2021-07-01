@@ -16,7 +16,8 @@ class RegisterForm extends Model {
     return [
       [['username', 'email', 'password'], 'required'],
       ['username', 'string', 'min' => 3, 'max' => 30],
-      ['password', 'string', 'min' => 3, 'max' => 30]
+      ['password', 'string', 'min' => 3, 'max' => 30],
+      ['description', 'string', 'max' => 250]
     ];
   }
 
