@@ -181,3 +181,45 @@ if (isset($_POST)) {
 $_POST, request, response, dll.
 3. $model->validate akan memvalidasi data berdasarkan rules yang telah
 diberikan.
+
+**Yii2 menyediakan Widget untuk mempermudah developer membuat front-end.**
+
+##### Bekerja dengan Database
+
+Untuk setting konfigurasi database ada di file config/db.php. Pastikan
+sudah punya database dan tablenya. Set jadi PostgreSQL:
+
+```
+  ...
+  'dsn' => 'pgsql:host=localhost;port=5432;dbname=yourdb',
+  'username' => 'user',
+  'password' => 'password',
+  ...
+```
+
+Buat model dengan parent ActiveRecord. Pastikan nama modelnya sama dengan
+tabel yang dibuat. 
+
+```php
+use yii\db\ActiveRecord;
+
+class Country extends ActiveRecord {
+  
+}
+```
+
+Tanpa harus mengisi class, Yii akan tahu bahwa table yg ingin 
+dihubungkan dengan model adalah country. Jika nama tabel tidak sama
+dengan model, override dengan yii\db\ActiveRecord::tableName().
+
+Pada controller, gunakan model yang sudah dibuat.
+
+```php
+use app\models\Country;
+```
+
+Untuk mengambil semua data dari table country, 
+
+```php
+$query->orderBy('name')->all();
+```
