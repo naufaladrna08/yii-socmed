@@ -88,4 +88,8 @@ class AppUser extends ActiveRecord implements IdentityInterface {
   public function generateAuthKey() {
     $this->authKey = Yii::$app->security->generateRandomString();
   }
+
+  public function getArticles() {
+    return $this->hasMany(Article::class, ['uid' => 'id']);
+  }
 }

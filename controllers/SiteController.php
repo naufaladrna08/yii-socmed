@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\RegisterForm;
 use app\models\ContactForm;
+use app\models\Article;
 
 use app\models\EntryForm;
 
@@ -60,7 +61,13 @@ class SiteController extends Controller {
    * @return string
    */
   public function actionIndex() {
-    return $this->render('index');
+    $articles = Article::find()
+                       ->select("*")
+                       ->leftJoin('users', 'users.id=articles.uid')
+                       ->with('user')
+                       ->all();
+
+    return $this->render('index', ['articles' => $articles]);
   }
 
   /**
