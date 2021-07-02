@@ -2,52 +2,42 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+use Yii;
+use yii\helpers\Html;
+
+$this->title = 'YiiBook - Home';
 ?>
 
 <div class="site-index mt-4">
-  <div class="jumbotron">
-    <h1>Congratulations!</h1>
-
-    <p class="lead">You have successfully created your Yii-powered application.</p>
-
-    <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-  </div>
-
-  <div class="body-content">
-
-    <div class="row">
-      <div class="col-lg-4">
-        <h2>Heading</h2>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat nulla pariatur.</p>
-
-        <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-      </div>
-      <div class="col-lg-4">
-        <h2>Heading</h2>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat nulla pariatur.</p>
-
-        <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-      </div>
-      <div class="col-lg-4">
-        <h2>Heading</h2>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat nulla pariatur.</p>
-
-        <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="card" width="100%">
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="card-img-top img-thumbnail">
+        <div class="card-body">
+          <p class="card-text"> <i class="fa fa-user"></i> <?= Html::encode(Yii::$app->user->identity->username) ?> </p>
+        </div>
       </div>
     </div>
 
+    <?php foreach ($articles as $a): ?>
+    <div class="col-md-8">
+      <div class="media border rounded p-2">
+        <img class="mr-3 img-thumbnail" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width="64" alt="Generic placeholder image">
+        <div class="media-body">
+          <h5 class="mt-0"> <?= $a['title'] ?> </h5>
+          <?= $a['content'] ?>
+
+          <div class="media-footer mt-2">
+            ~ <?= $a['user']['username'] ?> <br>
+            <i class="fa fa-thumbs-up"></i> 10
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php endforeach; ?>
+    
+    <div class="col-md-2">
+    
+    </div>
   </div>
 </div>
