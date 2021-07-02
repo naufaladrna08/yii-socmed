@@ -44,13 +44,14 @@ AppAsset::register($this);
       Yii::$app->user->isGuest ? (
         ['label' => 'Login', 'url' => ['/site/login']]
       ) : (
-        '<li>'
-        . Html::a('Profile', ['/user'])
-        .'</li> <li>'
+        '<li class="nav-item">'
+        . Html::a('Profile', ['/user'], ['class' => 'nav-link'])
+        .'</li>' 
+        . '<li class="nav-item">'
         . Html::beginForm(['/site/logout'], 'post')
         . Html::submitButton(
           'Logout (' . Yii::$app->user->identity->username . ')',
-          ['class' => 'btn btn-link logout']
+          ['class' => 'btn btn-success ml-2']
         )
         . Html::endForm()
         . '</li>'
@@ -60,8 +61,10 @@ AppAsset::register($this);
   NavBar::end();
   ?>
 
-  <div class="container">
+  <div class="container my-4">
     <?= Breadcrumbs::widget([
+      'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
+      'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
       'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     ]) ?>
     <?= Alert::widget() ?>
