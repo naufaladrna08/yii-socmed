@@ -61,13 +61,17 @@ class SiteController extends Controller {
    * @return string
    */
   public function actionIndex() {
+    /* Model for fetch articles */
     $articles = Article::find()
                        ->select("*")
                        ->leftJoin('users', 'users.id=articles.uid')
                        ->with('user')
                        ->all();
 
-    return $this->render('index', ['articles' => $articles]);
+    /* Model for new article */
+    $newArticle = new Article();
+
+    return $this->render('index', ['articles' => $articles, 'new' => $newArticle]);
   }
 
   /**
