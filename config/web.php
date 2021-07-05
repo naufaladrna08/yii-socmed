@@ -26,6 +26,7 @@ $config = [
     ],
     'errorHandler' => [
       'errorAction' => 'site/error',
+      'maxSourceLines' => 20,
     ],
     'mailer' => [
       'class' => 'yii\swiftmailer\Mailer',
