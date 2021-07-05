@@ -12,7 +12,11 @@ use app\models\RegisterForm;
 use app\models\ContactForm;
 use app\models\Article;
 
+use yii\base\ErrorException;
+
 use app\models\EntryForm;
+use app\models\AppUser;
+use app\models\CreateArticleForm;
 
 class SiteController extends Controller {
   /**
@@ -69,9 +73,17 @@ class SiteController extends Controller {
                        ->all();
 
     /* Model for new article */
-    $newArticle = new Article();
+    $model = new CreateArticleForm();
+    if ($model->load(Yii::$app->request->post())) {
+      $model->uid = Yii::$app->user->identity->id;
+      
+      if ($model->create()) {
+        return $this->goHome();
+      }
+      
+    }
 
-    return $this->render('index', ['articles' => $articles, 'new' => $newArticle]);
+    return $this->render('index', ['articles' => $articles, 'new' => $model]);
   }
 
   /**
@@ -152,21 +164,11 @@ class SiteController extends Controller {
     return $this->render('about');
   }
 
-  public function actionSay($message = "Hello") {
-    return $this->render('say', ['message' => $message]);
-  }
+  public function actionError() {
+    $exception = Yii::$app->errorHandler->exception;
 
-  public function actionEntry() {
-    $model = new EntryForm();
-    
-    if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-      /* Data valid */
-
-      return $this->render('entry-confirm', ['model' => $model]);
-    } else {
-      /* Invalid or form */
-
-      return $this->render('entry', ['model' => $model]);
+    if ($exception !== null) {
+      return $this->render('error', ['exception' => $exception]);
     }
-  } 
+  }
 }
