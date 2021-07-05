@@ -34,11 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
   <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="masthead mb-auto">
       <div class="inner">
-        <h3 class="masthead-brand">Cover</h3>
-        <nav class="nav nav-masthead justify-content-center">
-          <a class="nav-link active" href="#">Home</a>
-          <a class="nav-link" href="#">Features</a>
-          <a class="nav-link" href="#">Contact</a>
+        <h3 class="masthead-brand">YiiBook</h3>
+        <nav class="nav nav-masthead justify-content-center">  
+          <?= Html::a('Login', ['site/login'], ['class' => 'nav-link active']) ?>
+          <?= Html::a('Login', ['site/register'], ['class' => 'nav-link']) ?>
+          <?= Html::a('Login', ['site/contact'], ['class' => 'nav-link']) ?>
         </nav>
       </div>
     </header>
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <footer class="mastfoot mt-auto">
       <div class="inner">
-        <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+        <p> Copyright YiiBook <?= date('Y') ?> </p>
       </div>
     </footer>
   </div>
