@@ -119,6 +119,8 @@ class SiteController extends Controller {
    * 
    */
   public function actionRegister() {
+    $this->layout = 'clean';
+ 
     $model = new RegisterForm();
     if ($model->load(Yii::$app->request->post())) {
       if ($user = $model->signup()) {
