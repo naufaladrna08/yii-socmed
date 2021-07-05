@@ -37,8 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <h3 class="masthead-brand">YiiBook</h3>
         <nav class="nav nav-masthead justify-content-center">  
           <?= Html::a('Login', ['site/login'], ['class' => 'nav-link active']) ?>
-          <?= Html::a('Login', ['site/register'], ['class' => 'nav-link']) ?>
-          <?= Html::a('Login', ['site/contact'], ['class' => 'nav-link']) ?>
+          <?= Html::a('Register', ['site/register'], ['class' => 'nav-link']) ?>
+          <?= Html::a('About', ['site/contact'], ['class' => 'nav-link']) ?>
         </nav>
       </div>
     </header>
