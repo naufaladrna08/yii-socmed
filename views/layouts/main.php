@@ -74,11 +74,10 @@ AppAsset::register($this);
 
 <footer class="footer">
   <div class="container">
-    <p class="pull-left">&copy; YiiBook <?= date('Y') ?></p>
-
-    <p class="pull-right"><?= Yii::powered() ?></p>
+    <span class="text-muted"> &copy; YiiBook <?= date('Y') ?> </span>
   </div>
 </footer>
+
 
 <?php $this->endBody() ?>
 </body>
