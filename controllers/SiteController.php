@@ -96,6 +96,8 @@ class SiteController extends Controller {
    * @return Response|string
    */
   public function actionLogin() {
+    $this->layout = 'clean';
+
     if (!Yii::$app->user->isGuest) {
       return $this->goHome();
     }
