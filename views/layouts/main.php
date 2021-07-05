@@ -32,7 +32,7 @@ AppAsset::register($this);
     'brandLabel' => Yii::$app->name,
     'brandUrl' => Yii::$app->homeUrl,
     'options' => [
-      'class' => 'navbar navbar-expand-md navbar-dark bg-dark',
+      'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
     ],
   ]);
   echo Nav::widget([
@@ -61,7 +61,7 @@ AppAsset::register($this);
   NavBar::end();
   ?>
 
-  <div class="container my-4 px-0">
+  <div class="container" id="main">
     <?= Breadcrumbs::widget([
       'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
       'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
