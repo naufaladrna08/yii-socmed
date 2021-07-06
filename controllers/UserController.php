@@ -38,7 +38,7 @@ class UserController extends \yii\web\Controller {
       $user->photo = $model->id;
       $user->save();
 
-      return $this->redirect(['user/' . Yii::$app->user->identity->username]);
+      return $this->redirect(['user/']);
     }
 
     return $this->render('change-photo', ['model' => $model]);
