@@ -32,7 +32,7 @@ class AppUser extends ActiveRecord implements IdentityInterface {
     return [
       [['id'], 'required'],
       [['id'], 'default', 'value' => null],
-      [['id'], 'integer'],
+      [['id', 'photo'], 'integer'],
       [['username', 'email', 'password', 'description', 'authKey'], 'string'],
       [['id'], 'unique'],
     ];
