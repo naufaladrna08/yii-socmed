@@ -12,6 +12,7 @@ use Yii;
  * @property string|null $link
  */
 class Picture extends \yii\db\ActiveRecord {
+  public $file;
   /**
    * {@inheritdoc}
    */
@@ -27,6 +28,7 @@ class Picture extends \yii\db\ActiveRecord {
       [['author'], 'default', 'value' => null],
       [['author'], 'integer'],
       [['link'], 'string', 'max' => 255],
+      [['file'], 'file']
     ];
   }
 
@@ -38,6 +40,8 @@ class Picture extends \yii\db\ActiveRecord {
       'id' => 'ID',
       'author' => 'Author',
       'link' => 'Link',
+
+      'file' => 'Image'
     ];
   }
 }
