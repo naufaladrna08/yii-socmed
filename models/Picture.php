@@ -11,37 +11,33 @@ use Yii;
  * @property int|null $author
  * @property string|null $link
  */
-class Picture extends \yii\db\ActiveRecord
-{
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'pictures';
-    }
+class Picture extends \yii\db\ActiveRecord {
+  /**
+   * {@inheritdoc}
+   */
+  public static function tableName() {
+    return 'pictures';
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['author'], 'default', 'value' => null],
-            [['author'], 'integer'],
-            [['link'], 'string', 'max' => 255],
-        ];
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function rules() {
+    return [
+      [['author'], 'default', 'value' => null],
+      [['author'], 'integer'],
+      [['link'], 'string', 'max' => 255],
+    ];
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'author' => 'Author',
-            'link' => 'Link',
-        ];
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function attributeLabels() {
+    return [
+      'id' => 'ID',
+      'author' => 'Author',
+      'link' => 'Link',
+    ];
+  }
 }
