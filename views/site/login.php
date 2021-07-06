@@ -29,6 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
   .cover-container {
     max-width: 42em;
   }
+
+  a,
+  a:focus,
+  a:hover {
+    color: #fff;
+  }
+
 </style>
 
   <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
