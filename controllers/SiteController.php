@@ -17,6 +17,7 @@ use yii\base\ErrorException;
 use app\models\EntryForm;
 use app\models\AppUser;
 use app\models\CreateArticleForm;
+use app\models\Like;
 
 class SiteController extends Controller {
   /**
@@ -70,24 +71,16 @@ class SiteController extends Controller {
     }
 
     /* Model for fetch articles */
-    $articles = Article::find()
-                       ->select("*")
-                       ->leftJoin('users', 'users.id=articles.uid')
-                       ->with('user')
-                       ->all();
+    $model = Article::find()
+                    ->select(['articles.id', 'articles.title', 'articles.content', 'uid' => 'users.id', 'users.username'])
+                    ->leftJoin('users', 'users.id=articles.uid')
+                    ->with('user')
+                    ->orderBy('id DESC')
+                    ->all();
 
-    /* Model for new article */
-    $model = new CreateArticleForm();
-    if ($model->load(Yii::$app->request->post())) {
-      $model->uid = Yii::$app->user->identity->id;
-      
-      if ($model->create()) {
-        return $this->goHome();
-      }
-      
-    }
+    $like = new Like();
 
-    return $this->render('index', ['articles' => $articles, 'new' => $model]);
+    return $this->render('index', ['model' => $model, 'like' => $like]);
   }
 
   /**
@@ -178,5 +171,19 @@ class SiteController extends Controller {
     if ($exception !== null) {
       return $this->render('error', ['exception' => $exception]);
     }
+  }
+
+  public function actionCreateArticle() {
+    /* Model for new article */
+    $model = new CreateArticleForm();
+    if ($model->load(Yii::$app->request->post())) {
+      $model->uid = Yii::$app->user->identity->id;
+      
+      if ($model->create()) {
+        return $this->goHome();
+      }
+    }
+
+    return $this->render('create-article', ['model' => $model]);
   }
 }
