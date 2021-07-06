@@ -43,4 +43,28 @@ class UserController extends \yii\web\Controller {
 
     return $this->render('change-photo', ['model' => $model]);
   }
+
+  
+  public function actionUpdateProfile() {
+    $model = new AppUser();
+
+    if ($model->load(Yii::$app->request->post())) {
+      $user = $model->findOne(Yii::$app->user->identity->id);
+      $user->username    = Yii::$app->request->post('AppUser')['username'];
+      $user->email       = Yii::$app->request->post('AppUser')['email'];
+      $user->description = Yii::$app->request->post('AppUser')['description'];
+      
+      if ($user->save()) {
+
+      } else {
+        echo $user->createCommand()->getRawSql();        
+      }
+
+      return $this->redirect('user');
+    }
+
+    return $this->render('update-profile', [
+      'model' => $model,
+    ]);
+  }
 }
