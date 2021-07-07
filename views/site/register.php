@@ -53,10 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
       'id' => 'register-form'
     ]); ?>
 
-      <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label(false) ?>
-      <?= $form->field($model, 'email')->textInput(['autofocus' => true])->label(false) ?>
-      <?= $form->field($model, 'password')->passwordInput()->label(false) ?>
-      <?= $form->field($model, 'description')->textarea()->label(false) ?>
+      <?= $form->field($model, 'firstname')->textInput(['autofocus' => true, 'placeholder' => 'First Name'])->label(false) ?>
+      <?= $form->field($model, 'lastname')->textInput(['autofocus' => true, 'placeholder' => 'Last Name (Optional)'])->label(false) ?>
+      <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
+      <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'placeholder' => 'Email'])->label(false) ?>
+      <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false) ?>
+      <?= $form->field($model, 'description')->textarea(['placeholder' => 'Description'])->label(false) ?>
 
       <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11 px-0">
