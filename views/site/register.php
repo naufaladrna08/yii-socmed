@@ -43,21 +43,20 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
     </header>
 
-    <main role="main" class="inner cover text-center" style="width: 80%;">
-      <div class="title my-4">
+    <main role="main" class="inner cover text-center" style="width: 80%; margin-bottom: 8em">
+      <div class="title">
         <h1><?= Html::encode($this->title) ?></h1>
         <p class="lead"> Please fill this form to Login! </p>
       </div>
 
     <?php $form = ActiveForm::begin([
-      'id' => 'register-form',
-      'layout' => 'horizontal'
+      'id' => 'register-form'
     ]); ?>
 
-      <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-      <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
-      <?= $form->field($model, 'password')->passwordInput() ?>
-      <?= $form->field($model, 'description')->textarea() ?>
+      <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label(false) ?>
+      <?= $form->field($model, 'email')->textInput(['autofocus' => true])->label(false) ?>
+      <?= $form->field($model, 'password')->passwordInput()->label(false) ?>
+      <?= $form->field($model, 'description')->textarea()->label(false) ?>
 
       <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11 px-0">
