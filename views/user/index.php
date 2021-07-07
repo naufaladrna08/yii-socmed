@@ -18,6 +18,10 @@ $this->title = "YiiBook - " . Yii::$app->user->identity->username;
       <div class="display-4"> <?= Html::encode($data['username']) ?>'s Profile </div>
 
       <div class="row mt-4">
+        <div class="col-md-12"> <h5> Name </h5> </div>
+        <div class="col-md-12"> <p class="lead"> <?= Html::encode(Yii::$app->user->identity->firstname) . ' ' . Html::encode(Yii::$app->user->identity->lastname) ?> </p> </div>
+      </div>
+      <div class="row">
         <div class="col-md-12"> <h5> Username </h5> </div>
         <div class="col-md-12"> <p class="lead"> <?= Html::encode(Yii::$app->user->identity->username) ?> </p> </div>
       </div>
