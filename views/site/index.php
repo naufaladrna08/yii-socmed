@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = "";
   <div class="row">
     <div class="col-md-2">
       <div class="card" width="100%">
-        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="card-img-top img-thumbnail">
+        <img src="<?= $user->getProfilePicture() ?>" class="card-img-top img-thumbnail">
         <div class="card-body">
           <p class="card-text"> <i class="fa fa-user"></i> <?= Html::encode(Yii::$app->user->identity->username) ?> </p>
         </div>
@@ -26,12 +26,21 @@ $this->params['breadcrumbs'][] = "";
 
       <?php foreach ($model as $article): ?>
       <?php 
+        /* Like or Disklike Button */
         $thumb = $like->find()->where(['uid' => Yii::$app->user->identity->id, 'aid' => $article['id']])->count() == 1 ? '<i class="fa fa-thumbs-up"> </i> ' : '<i class="fa fa-thumbs-down"> </i> ';
-        $likes = $thumb . $like->find()->where(['aid' => $article['id']])->count();   
+        $likes = $thumb . $like->find()->where(['aid' => $article['id']])->count();
+
+        /* Photo */
+        if ($article['user']['photo'] == null) {
+          $profilePicture = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+        } else {
+          $pictures       = $picture->findOne($article['user']['photo']);
+          $profilePicture = $pictures['link'];
+        }    
       ?>
       
       <div class="media border rounded p-2 my-2">
-        <img class="mr-3 img-thumbnail" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width="64" alt="Generic placeholder image">
+        <img class="mr-3 img-thumbnail" src="<?= $profilePicture ?>" width="64" alt="Generic placeholder image">
         <div class="media-body">
           <h5 class="mt-0"> <?= $article['title'] ?> </h5>
           <?= Html::encode(strip_tags($article['content'])) ?>

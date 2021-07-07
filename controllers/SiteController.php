@@ -7,17 +7,18 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\RegisterForm;
-use app\models\ContactForm;
-use app\models\Article;
-
 use yii\base\ErrorException;
 
+/* Models */
 use app\models\EntryForm;
 use app\models\AppUser;
 use app\models\CreateArticleForm;
 use app\models\Like;
+use app\models\LoginForm;
+use app\models\RegisterForm;
+use app\models\ContactForm;
+use app\models\Article;
+use app\models\Picture;
 
 class SiteController extends Controller {
   /**
@@ -72,15 +73,28 @@ class SiteController extends Controller {
 
     /* Model for fetch articles */
     $model = Article::find()
-                    ->select(['articles.id', 'articles.title', 'articles.content', 'uid' => 'users.id', 'users.username'])
+                    ->select([
+                      'articles.id', 
+                      'articles.title', 
+                      'articles.content', 
+                      'users.photo', 
+                      'uid' => 'users.id', 
+                      'users.username'])
                     ->leftJoin('users', 'users.id=articles.uid')
                     ->with('user')
                     ->orderBy('id DESC')
                     ->all();
 
-    $like = new Like();
+    $like     = new Like();
+    $pictures = new Picture();
 
-    return $this->render('index', ['model' => $model, 'like' => $like]);
+    return $this->render('index', [
+      'model'   => $model, 
+      'like'    => $like, 
+      'picture' => $pictures,
+      'user'    => new AppUser 
+      ]
+    );
   }
 
   /**
