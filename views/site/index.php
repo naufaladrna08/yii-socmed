@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = "";
       <?php foreach ($model as $article): ?>
       <?php 
         /* Like or Disklike Button */
-        $thumb = $like->find()->where(['uid' => Yii::$app->user->identity->id, 'aid' => $article['id']])->count() == 1 ? '<i class="fa fa-thumbs-up"> </i> ' : '<i class="fa fa-thumbs-down"> </i> ';
+        $thumb = $like->find()->where(['uid' => Yii::$app->user->identity->id, 'aid' => $article['id']])->count() == 0 ? '<i class="fa fa-thumbs-up"> </i> ' : '<i class="fa fa-thumbs-down"> </i> ';
         $likes = $thumb . $like->find()->where(['aid' => $article['id']])->count();
 
         /* Photo */
