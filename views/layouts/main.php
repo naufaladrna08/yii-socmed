@@ -45,12 +45,12 @@ AppAsset::register($this);
         ['label' => 'Login', 'url' => ['/site/login']]
       ) : (
         '<li class="nav-item">'
-        . Html::a('Profile', ['/user'], ['class' => 'nav-link'])
+        . Html::a(Yii::$app->user->identity->username, ['/user'], ['class' => 'nav-link'])
         .'</li>' 
         . '<li class="nav-item">'
         . Html::beginForm(['/site/logout'], 'post')
         . Html::submitButton(
-          'Logout (' . Yii::$app->user->identity->username . ')',
+          'Logout',
           ['class' => 'btn btn-success ml-2']
         )
         . Html::endForm()
