@@ -10,12 +10,10 @@ use yii\filters\VerbFilter;
 use yii\base\ErrorException;
 
 /* Models */
-use app\models\EntryForm;
 use app\models\AppUser;
 use app\models\CreateArticleForm;
 use app\models\Like;
 use app\models\LoginForm;
-use app\models\RegisterForm;
 use app\models\ContactForm;
 use app\models\Article;
 use app\models\Picture;

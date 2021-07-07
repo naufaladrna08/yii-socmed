@@ -8,6 +8,7 @@ use yii\bootstrap4\ActiveForm;
 
 $this->title = 'YiiBook - Home';
 $this->params['breadcrumbs'][] = "";
+
 ?>
 
 <div class="site-index mt-4">
