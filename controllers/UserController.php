@@ -5,9 +5,9 @@ namespace app\controllers;
 use Yii;
 use \app\models\AppUser;
 use \app\models\Picture;
-use yii\web\UploadedFile;
 use yii\db\Connection;
 use yii\base\Exception;
+use \vintage\tinify\UploadedFile;
 
 class UserController extends \yii\web\Controller {
   public function actionIndex($username = "") {
@@ -38,6 +38,11 @@ class UserController extends \yii\web\Controller {
       try {
         /* Save photo */
         $model->file = UploadedFile::getInstance($model, 'file');
+        $model->file->resize()
+                    ->cover()
+                    ->width(512)
+                    ->height(512)
+                    ->process();
         $fileName = 'uploads/' .  time() . '.' . $model->file->extension;
         $model->file->saveAs($fileName);
         $model->author = Yii::$app->user->identity->id;
