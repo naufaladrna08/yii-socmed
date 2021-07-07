@@ -37,12 +37,13 @@ class AppUser extends ActiveRecord implements IdentityInterface {
       [['photo'], 'default', 'value' => null],
       [['photo'], 'integer'],
       [['authKey'], 'string', 'max' => 32],
+      [['firstname', 'lastname'], 'string', 'max' => 200],
     ];
   }
 
   /**
-   * {@inheritdoc}
-   */
+  * {@inheritdoc}
+  */
   public function attributeLabels() {
     return [
       'id' => 'ID',
@@ -52,6 +53,8 @@ class AppUser extends ActiveRecord implements IdentityInterface {
       'description' => 'Description',
       'authKey' => 'Auth Key',
       'photo' => 'Photo',
+      'firstname' => 'Firstname',
+      'lastname' => 'Lastname',
     ];
   }
 
