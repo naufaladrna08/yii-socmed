@@ -11,15 +11,22 @@ use yii\base\Exception;
 
 class UserController extends \yii\web\Controller {
   public function actionIndex($username = "") {
-    $user = new AppUser();
-    
+    $profilePicture = '';
+
     if ($username == "") {
-      $user->findByUsername(Yii::$app->user->identity->username);
+      $user = AppUser::find()->where(['username' => Yii::$app->user->identity->username])->one();
     } else {
-      $user->findByUsername($username);
+      $user = AppUser::find()->where(['username' => $username])->one();
     }
 
-    return $this->render('index', ['data' => $user, 'username' => $username]);
+    if ($user->photo == null) {
+      $profilePicture = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+    } else {
+      $picture        = Picture::findOne($user->photo);
+      $profilePicture = $picture['link'];
+    }
+
+    return $this->render('index', ['data' => $user, 'pic' => $profilePicture]);
   }
 
   public function actionChangePhoto() {

@@ -16,6 +16,7 @@ use yii\base\NotSupportedException;
  * @property string|null $password
  * @property string|null $description
  * @property string|null $authKey
+ * @property int|null $photo 
  */
 class AppUser extends ActiveRecord implements IdentityInterface {
   /**
@@ -30,11 +31,10 @@ class AppUser extends ActiveRecord implements IdentityInterface {
    */
   public function rules() {
     return [
-      [['id'], 'required'],
-      [['id'], 'default', 'value' => null],
-      [['id', 'photo'], 'integer'],
-      [['username', 'email', 'password', 'description', 'authKey'], 'string'],
-      [['id'], 'unique'],
+      [['username', 'email', 'password', 'description'], 'string'],
+      [['photo'], 'default', 'value' => null],
+      [['photo'], 'integer'],
+      [['authKey'], 'string', 'max' => 32],
     ];
   }
 
@@ -49,6 +49,7 @@ class AppUser extends ActiveRecord implements IdentityInterface {
       'password' => 'Password',
       'description' => 'Description',
       'authKey' => 'Auth Key',
+      'photo' => 'Photo',
     ];
   }
 
