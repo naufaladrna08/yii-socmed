@@ -7,6 +7,8 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\base\NotSupportedException;
 
+use app\models\Picture;
+
 /**
  * This is the model class for table "users".
  *
@@ -92,5 +94,18 @@ class AppUser extends ActiveRecord implements IdentityInterface {
 
   public function getArticles() {
     return $this->hasMany(Article::class, ['uid' => 'id']);
+  }
+
+  public function getProfilePicture() {
+    $user = self::findOne(['id' => Yii::$app->user->identity->id]);
+
+    if ($user->photo == null) {
+      $profilePicture = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+    } else {
+      $picture        = Picture::findOne($user->photo);
+      $profilePicture = $picture['link'];
+    }
+
+    return $profilePicture;
   }
 }
