@@ -38,6 +38,7 @@ class AppUser extends ActiveRecord implements IdentityInterface {
       [['photo'], 'integer'],
       [['authKey'], 'string', 'max' => 32],
       [['firstname', 'lastname'], 'string', 'max' => 200],
+      ['username', 'unique']
     ];
   }
 
