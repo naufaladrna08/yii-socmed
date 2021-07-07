@@ -130,19 +130,25 @@ class SiteController extends Controller {
  
     $model = new AppUser();
     if ($model->load(Yii::$app->request->post())) {
-      $model->username     = Yii::$app->request->post('AppUser')['username'];
-      $model->firstname    = Yii::$app->request->post('AppUser')['firstname'];
-      $model->lastname     = Yii::$app->request->post('AppUser')['lastname'];
-      $model->email        = Yii::$app->request->post('AppUser')['email'];  
-      $model->description  = Yii::$app->request->post('AppUser')['description'];
-      $model->setPassword(Yii::$app->request->post('AppUser')['password']);
-      $model->generateAuthKey();
+      $transaction = Yii::$app->db->beginTransaction();
       
-      if ($model->save()) {
-        if (Yii::$app->getUser()->login($model)) {
-          return $this->goHome();
-        }
+      try {
+        $model->username     = Yii::$app->request->post('AppUser')['username'];
+        $model->firstname    = Yii::$app->request->post('AppUser')['firstname'];
+        $model->lastname     = Yii::$app->request->post('AppUser')['lastname'];
+        $model->email        = Yii::$app->request->post('AppUser')['email'];  
+        $model->description  = Yii::$app->request->post('AppUser')['description'];
+        $model->setPassword(Yii::$app->request->post('AppUser')['password']);
+        $model->generateAuthKey();
+        $model->save();
+
+        $transaction->commit();
+      } catch (Exception $e) {
+        $transaction->rollBack();
+        throw $e;
       }
+
+      return $this->redirect('site/login');
     }
 
     return $this->render('register', [
