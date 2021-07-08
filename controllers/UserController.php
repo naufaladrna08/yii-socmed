@@ -76,15 +76,19 @@ class UserController extends \yii\web\Controller {
     $model = new AppUser();
 
     if ($model->load(Yii::$app->request->post())) {
-      $user = $model->findOne(Yii::$app->user->identity->id);
-      $user->username    = Yii::$app->request->post('AppUser')['username'];
-      $user->email       = Yii::$app->request->post('AppUser')['email'];
-      $user->description = Yii::$app->request->post('AppUser')['description'];
+      $transaction = Yii::$app->db->beginTransaction();
       
-      if ($user->save()) {
+      try {
+        $user = $model->findOne(Yii::$app->user->identity->id);
+        $user->username    = Yii::$app->request->post('AppUser')['username'];
+        $user->email       = Yii::$app->request->post('AppUser')['email'];
+        $user->description = Yii::$app->request->post('AppUser')['description'];
+        $user->save();
 
-      } else {
-        echo $user->createCommand()->getRawSql();        
+        $transaction->commit();
+      } catch (Exception $e) {
+        $transaction->rollBack();
+        throw $e;
       }
 
       return $this->redirect('user');
