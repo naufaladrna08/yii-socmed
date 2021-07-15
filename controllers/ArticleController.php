@@ -47,11 +47,10 @@ class ArticleController extends Controller {
    * @return mixed
    * @throws NotFoundHttpException if the model cannot be found
    */
-  public function actionView($id)
-  {
-      return $this->render('view', [
-          'model' => $this->findModel($id),
-      ]);
+  public function actionView($id) {
+    return $this->render('view', [
+        'model' => $this->findModel($id),
+    ]);
   }
 
   /**
@@ -116,5 +115,18 @@ class ArticleController extends Controller {
     }
 
     throw new NotFoundHttpException('The requested page does not exist.');
+  }
+
+  /*
+   * Get articles from database. Yes u know it. 
+   */
+  public function actionGetUserArticles() {
+    $id     = $_POST['id'];
+    $start  = $_POST['start'];
+    $offset = $_POST['offset']; 
+
+    $model = Article::find()->where(['uid' => $id])->all();
+
+    return $this->renderPartial('_article', ['model' => $model, 'user_id' => $id]);
   }
 }
