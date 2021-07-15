@@ -1,8 +1,10 @@
 <?php
 /* @var $this yii\web\View */
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\View;
 
-$this->title = "YiiBook - " . Yii::$app->user->identity->username;
+$this->title = "YiiBook - " . $data['username'];
 ?>
 
 <div class="container">
@@ -29,7 +31,36 @@ $this->title = "YiiBook - " . Yii::$app->user->identity->username;
         <div class="col-md-12"> <h5> Description </h5> </div>
         <div class="col-md-12"> <p class="lead"> <?= Html::encode($data['description']) ?> </p> </div>
       </div>
+      <div class="row" id="articles">
+        
+      </div>
     </div>
   </div>
-  
 </div>
+
+<?php 
+
+$js = <<< JS
+  $(document).ready(() => {
+    showArticle()
+  })
+
+  function showArticle() {
+    $.ajax({
+      url: "http://localhost:8080/index.php?r=article/get-user-articles",
+      type: "POST",
+      dataType: "html",
+      data: {
+        id: 3,
+        start: 0,
+        offset: 0
+      },
+      success: function(data) {
+        $("#articles").html(data)
+      }
+    })
+  }
+JS;
+
+$this->registerJs($js, View::POS_READY, 'article-handler');
+?>
