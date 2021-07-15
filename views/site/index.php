@@ -9,6 +9,36 @@ use yii\bootstrap4\ActiveForm;
 $this->title = 'YiiBook - Home';
 $this->params['breadcrumbs'][] = "";
 
+$script = <<< JS
+$(function () {
+  $('#like-post').click(function () { likeFunction(this); });
+  $('#dislike-post').click(function () { dislikeFunction(this);});
+});
+
+
+function likeFunction(caller) {
+  var postId = caller.parentElement.getAttribute('id');
+  console.log(postId)
+  // $.ajax({
+  //   type: "POST",
+  //   url: "rate.php",
+  //   data: 'Action=LIKE&PostID=' + postId,
+  //   success: function () {}
+  // });
+}
+function dislikeFunction(caller) {
+  var postId = caller.parentElement.getAttribute('id');
+  // $.ajax({
+  //   type: "POST",
+  //   url: "rate.php",
+  //   data: 'Action=DISLIKE&PostID=' + postId,
+  //   success: function () {}
+  // });
+}
+
+JS;
+$this->registerJs($script);
+
 ?>
 
 <div class="site-index mt-4">
@@ -30,6 +60,7 @@ $this->params['breadcrumbs'][] = "";
         /* Like or Disklike Button */
         $thumb = $like->find()->where(['uid' => Yii::$app->user->identity->id, 'aid' => $article['id']])->count() == 0 ? '<i class="fa fa-thumbs-up"> </i> ' : '<i class="fa fa-thumbs-down"> </i> ';
         $likes = $thumb . $like->find()->where(['aid' => $article['id']])->count();
+        $btnId = $like->find()->where(['uid' => Yii::$app->user->identity->id, 'aid' => $article['id']])->count() == 0 ? 'like-post' : 'dislike-post';
 
         /* Photo */
         if ($article['user']['photo'] == null) {
@@ -40,7 +71,7 @@ $this->params['breadcrumbs'][] = "";
         }    
       ?>
       
-      <div class="media border rounded p-2 my-2">
+      <div class="media border rounded p-2 my-2" id="<?= $article['id'] ?>">
         <img class="mr-3 img-thumbnail" src="<?= $profilePicture ?>" width="64" alt="Generic placeholder image">
         <div class="media-body">
           <h5 class="mt-0"> <?= $article['title'] ?> </h5>
@@ -48,16 +79,12 @@ $this->params['breadcrumbs'][] = "";
 
           <div class="media-footer mt-2">
             ~ <?= Html::a($article['user']['username'], ['user/', 'username' => $article['user']['username']]) ?> <br>
-            <?= Html::a($likes, 'article/like') ?>
+            <a href="javascript:void(0);"> <?= $likes ?> </a>
           </div>
           <br>
         </div>
       </div>
       <?php endforeach; ?>
-    </div>
-    
-    <div class="col-md-2">
-    
     </div>
   </div>
 </div>
